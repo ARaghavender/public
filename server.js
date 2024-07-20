@@ -15,16 +15,16 @@ server.use(express.static(path.join(__dirname, 'ITC505', 'lab-7')));
 // Favicon route
 server.get('/favicon.ico', (req, res) => res.status(204));
 
-// Route to serve madlib.html
+// Route to serve index.html
 server.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'ITC505', 'lab-7', 'madlib.html'));
+  res.sendFile(path.join(__dirname, 'ITC505', 'lab-7', 'index.html'));
 });
 
 // Handle form submission
 server.post('/submit', (req, res) => {
-  const { adjective1, pluralNoun, verb, place, adjective2 } = req.body;
+  const { adjective1, noun1, verb1, adverb, adjective2, noun2, verb2 } = req.body;
 
-  if (!adjective1 || !pluralNoun || !verb || !place || !adjective2) {
+  if (!adjective1 || !noun1 || !verb1 || !adverb || !adjective2 || !noun2 || !verb2) {
     return res.status(400).send(`
       <h1>Submission Failed</h1>
       <p>Please fill out ALL fields</p>
@@ -32,11 +32,19 @@ server.post('/submit', (req, res) => {
     `);
   }
 
-  const madLib = `It was a(n) ${adjective1} day. The ${pluralNoun} decided to ${verb} to the ${place}. It was a very ${adjective2} experience.`;
-
+  const story = `
+    The ${adjective1} ${noun1} ${verb1} ${adverb} through the forest.
+    Suddenly, it encountered a ${adjective2} ${noun2} blocking its path.
+    The ${noun1} didn't know what to do at first.
+    After a moment of hesitation, it decided to ${verb2} around the obstacle.
+    This unexpected adventure made the ${noun1} realize that sometimes,
+    the most interesting journeys are the ones we don't plan.
+    From that day on, the ${noun1} always looked forward to new challenges,
+    knowing that each one was an opportunity for growth and excitement.
+  `;
   res.send(`
     <h1>Submission Successful</h1>
-    <p>${madLib}</p>
+    <p>${index}</p>
     <a href="/">Go Back to Form</a>
   `);
 });
