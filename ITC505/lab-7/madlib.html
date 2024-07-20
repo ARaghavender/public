@@ -7,60 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mad Libs</title>
     
-    <style>body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-h1 {
-    color: #333;
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-form {
-    background-color: white;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
-}
-
-label {
-    display: block;
-    margin-bottom: 5px;
-    color: #555;
-}
-
-input[type="text"] {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
-button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    width: 100%;
-}
-
-button:hover {
-    background-color: #45a049;
-}</style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -83,6 +30,49 @@ button:hover {
 
         <button type="submit">Submit</button>
     </form>
+
+
+
+<footer>
+<p>
+<h4>Addendum:</h4>
+
+In this project, I created a web server using Express.js to host a madlib game. Here's an overview of my process and
+choices:
+
+1. Server Setup: I chose Express.js for its simplicity and robust feature set. I used middleware for parsing form data,
+logging requests, and serving static files.
+
+2. File Structure: I organized my static files (HTML, CSS) in a 'public' folder for clear separation from server-side
+code.
+
+3. Routing: I implemented two main routes - a GET route to serve the form and a POST route to handle form submission.
+The POST route checks for complete form data and generates the madlib story.
+
+4. Error Handling: I added checks to ensure all form fields are filled before generating the story, providing user
+feedback if fields are missing.
+
+5. Port Selection: The server uses port 80 by default, but switches to 8085 if run with a 'local' argument, allowing for
+flexible deployment.
+
+6. CSS Integration: I linked the CSS file in the HTML and served it as a static file. Initially, I faced a 404 error
+which I resolved by correcting the file path in the server configuration.
+
+7. Learning Outcomes: This project taught me about server-side routing, form handling, and the importance of proper file
+paths in web development. I learned to use developer tools to debug issues like the CSS 404 error.
+
+</p>
+
+    <p>Last updated:
+        <span id="lastModified"></span>
+    </p>
+
+    <script type="text/javascript">
+        var x = document.lastModified;
+        document.getElementById('lastModified').textContent = x;
+    </script>
+</footer>
+
 </body>
 
 </html>
