@@ -1,27 +1,29 @@
+
 const express = require('express');
-const logger = require('morgan');
+const app = express();
 const path = require('path');
-const helmet = require('helmet');
-const server = express();
+const PORT = 3001; // You can change the port if needed
 
-// Middleware
-server.use(helmet());
-server.use(express.urlencoded({ extended: true }));
-server.use(logger('dev'));
+// Serve the script.js file
 
-// Serve static files from the 'ITC505/lab-7' directory
-server.use(express.static(path.join(__dirname, 'ITC505', 'lab-7')));
 
-// Favicon route
-server.get('/favicon.ico', (req, res) => res.status(204));
+// Serve CSS files with the appropriate MIME type
+app.get('/ITC505/lab-7/style.css', (req, res) => {
+  res.sendFile(path.join(__dirname, 'ITC505', 'lab-7', 'style.css'));
+});
+// Middleware to parse JSON and URL encoded data
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// Route to serve index.html
-server.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'ITC505', 'lab-7', 'index.html'));
+// Serve static files from the 'public' directory
+app.use('/ITC505/lab-7',express.static(path.join(__dirname, 'public')));
+app.get('/ITC505/lab-7/index.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'ITC505','lab-7', 'index.html'));
 });
 
+
 // Handle form submission
-server.post('/submit', (req, res) => {
+app.post('/submit', (req, res) => {
   const { adjective1, noun1, verb1, adverb, adjective2, noun2, verb2 } = req.body;
 
   if (!adjective1 || !noun1 || !verb1 || !adverb || !adjective2 || !noun2 || !verb2) {
@@ -42,23 +44,26 @@ server.post('/submit', (req, res) => {
     From that day on, the ${noun1} always looked forward to new challenges,
     knowing that each one was an opportunity for growth and excitement.
   `;
+  
   res.send(`
-    <h1>Submission Successful</h1>
-    <p>${index}</p>
-    <a href="/">Go Back to Form</a>
+    <h1>Your Mad Lib Story</h1>
+    <p>${story}</p>
+    <a href="/">Create Another Story</a>
   `);
 });
 
 // Error handling middleware
-server.use((err, req, res, next) => {
+app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something broke!');
 });
 
 // Determine the port to listen on
-const port = process.argv[2] === 'local' ? 8085 : 80;
-
-// Start the server
-server.listen(port, () => {
+let port = 80
+if (process.argv[2] === 'local') {
+  port = 8080
+}
+// Start the app
+app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
