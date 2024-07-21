@@ -69,6 +69,10 @@ footer {
     margin-top: auto;
 }
 
+.addendum{
+    color: white;
+}
+
 @media (max-width: 480px) {
     body {
         padding: 20px 10px;

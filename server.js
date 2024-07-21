@@ -48,7 +48,7 @@ app.post('/submit', (req, res) => {
   res.send(`
     <h1>Your Mad Lib Story</h1>
     <p>${story}</p>
-    <a href="/">Create Another Story</a>
+    <a href="/ITC505/lab-7/index.html">You want to try again</a>
   `);
 });
 
